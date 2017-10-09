@@ -31,7 +31,7 @@ import java.util.function.Function;
 import java.io.Serializable;
 
 /**
- * 将keys映射到values的一个对象. map中不能包含车哦那功夫的key;
+ * 将keys映射到values的一个对象. map中不能包含重复的key;
  * 一个key不能对应超过1个的value.
  *
  * <p>该接口取代了 <tt>Dictionary</tt> 类, 它是一个完全的抽象类而不是一个接口.
@@ -40,24 +40,16 @@ import java.io.Serializable;
  * 它允许将map的内容视为 set of keys，collection of values，或者 set of key-value mappings。
  * 集合的 <i>order</i> 定义为map的迭代器返回其元素的顺序。一些map的实现，例如<tt>TreeMap</tt>类，
  * 会采用特殊的方式保证它的顺序；另外一些，例如 <tt>HashMap</tt> 类，则不会保证顺序。
+ * 
+ * 注意：需要特别注意使用可变对象作为  Map 的键的情况。 如果对象的值会影响<tt> equals </ tt>方法的结果，
+ * 而对象是 Map 中的键，则对象值的改变会影响 Map 中的映射关系。 这个禁令的一个特殊情况是，Map 不允许将自己作为建。
+ * 虽然 Map 可以将其自身包含为一个值，但建议您非常小心：这种情况下 Map 不能很好的定义 <tt> equals </ tt> 和
+ *  <tt> hashCode </ tt>方法。
  *
- * <p>Note: great care must be exercised if mutable objects are used as map
- * keys.  The behavior of a map is not specified if the value of an object is
- * changed in a manner that affects <tt>equals</tt> comparisons while the
- * object is a key in the map.  A special case of this prohibition is that it
- * is not permissible for a map to contain itself as a key.  While it is
- * permissible for a map to contain itself as a value, extreme caution is
- * advised: the <tt>equals</tt> and <tt>hashCode</tt> methods are no longer
- * well defined on such a map.
- *
- * <p>All general-purpose map implementation classes should provide two
- * "standard" constructors: a void (no arguments) constructor which creates an
- * empty map, and a constructor with a single argument of type <tt>Map</tt>,
- * which creates a new map with the same key-value mappings as its argument.
- * In effect, the latter constructor allows the user to copy any map,
- * producing an equivalent map of the desired class.  There is no way to
- * enforce this recommendation (as interfaces cannot contain constructors) but
- * all of the general-purpose map implementations in the JDK comply.
+ * <p>所有通用的 Map 实现类，需要实现两个“标准”构造函数: 一个空参数的构造函数，它创建一个空的 Map, 
+ * 和只有一个参数类型为 <tt>Map</tt>的构造函数, 它创建一个包含参数中所有映射的新 Map。
+ * 事实上后一种构造函数可以实现 Map 的赋值，产生一个所需要类型的等效 Map.没有办法强制执行此建议（以为接口中不能定义构造函数），
+ * 但是JDK中所有通用的 Map 实现类，都遵循了这一建议。
  *
  * <p>The "destructive" methods contained in this interface, that is, the
  * methods that modify the map on which they operate, are specified to throw
